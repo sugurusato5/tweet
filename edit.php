@@ -16,8 +16,6 @@ $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $conntent = $_POST['conntent'];
@@ -51,10 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>編集</title>
+    <title>編集画面</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <h1>tweetの編集</h1>
+    <a href="index.php">戻る</a><br>
     <?php if($errors) : ?>
         <ul class="error-list">
             <?php foreach($errors as $error) : ?>
@@ -63,14 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </li>
             <?php endforeach; ?>
         </ul>
+    
     <?php endif; ?>
     <form action="" method="post">
         <div>
-            <label for="conntent">本文</label><br>
+            <label for="conntent">ツイート内容</label><br>
             <textarea name="conntent" id="" cols="30" rows="5" placeholder="いまどうしてる？"><?= h($tweet['conntent']) ?></textarea>
         </div>
         <div>
-            <input type="submit" value="編集する">
+            <input type="submit" value="編集する"><br>
         </div>
     </form>
 </body>

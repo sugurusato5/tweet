@@ -45,13 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規tweet</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>新規ツイート</h1>
+    <h1>Tweet</h1>
     <?php if($errors) : ?>
-        <ul>
+        <ul class="error-list">
             <?php foreach($errors as $error) : ?>
-                <li>
+                <li >
                     <?= h($error) ?>
                 </li>
             <?php endforeach; ?>
@@ -60,19 +61,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="" method="post">
         <div>
             <label for="conntent">ツイート内容</label><br>
-            <textarea name="conntent" id="" cols="30" rows="5" placeholder="いまどうしてる？"></textarea>
+            <textarea name="conntent" id="" cols="30" rows="4" placeholder="いまどうしてる？"></textarea>
         </div>
+        <br>
         <div>
             <input type="submit" value="投稿する">
         </div>
     </form>
     <h1>Tweet一覧</h1>
     <?php  if($tweets) : ?>
-        <ul>
+        <ul class="line-none list-none">
         <?php foreach($tweets as $tweet) : ?>
             <li>
-                <a href="show.php?id=<?= h($tweet['id']) ?>"><?= h($tweet['conntent']) ?></a><br>
+                <a class="list-none" href="show.php?id=<?= h($tweet['id']) ?>"><?= h($tweet['conntent']) ?></a>
+                <br>
                 投稿日時:<?= h($tweet['created_at']) ?>
+                <?php if($tweet['good'] == '0') : ?>
+                    <a class="good-link" href="good.php?id=<?= h($tweet['id']) ?>">☆</a>
+                <?php else : ?>
+                    <a class="bad-link" href="good.php?id=<?= h($tweet['id']) ?>">★</a>
+                <?php endif; ?>
                 <hr>
             </li>
         <?php endforeach; ?>
