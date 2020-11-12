@@ -18,22 +18,23 @@ $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $conntent = $_POST['conntent'];
+    $created_at = $_POST['created_at'];
     $errors = [];
 
-    if ($conntent = $tweet['conntent']) {
-        $errors = '内容が変更されていません';
+    if ($conntent == $tweet['conntent']) {
+        $errors['conntent'] = '内容が変更されていません';
     }
 
-    if ($conntent = '') {
-        $errors = '入力されていません';
+    if ($conntent == '') {
+        $errors['conntent'] = '入力されていません';
     }
 
     if (!$errors) {
         $dbh = connectDb();
-        $sql = 'UPDATE tweets SET conntent = :conntent WHERE id = :id';
+        $sql = 'UPDATE tweets SET conntent = :conntent, created_at = CURRENT_TIMESTAMP WHERE id = :id';
         $stmt = $dbh->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':conntent', $conntent, PDO::PARAM_STR);
