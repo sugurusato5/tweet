@@ -38,9 +38,9 @@ $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
             <?= h($tweet['conntent']) ?><br>
             投稿日時:<?= h($tweet['created_at']) ?>
             <?php if($tweet['good'] == '0') : ?>
-                <a class="good-link" href="good.php?id=<?= h($tweet['id']) ?>">☆</a>
+                <a class="good-link" href="good.php?id=<?= h($tweet['id']) ?>& good=1">☆</a>
             <?php else : ?>
-                <a class="bad-link" href="good.php?id=<?= h($tweet['id']) ?>">★</a>
+                <a class="bad-link" href="good.php?id=<?= h($tweet['id']) ?>& good=0">★</a>
             <?php endif; ?>
             <a href="edit.php?id=<?= h($tweet['id']) ?>">[編集]</a>
             <a href="delete.php?id=<?= h($tweet['id']) ?>">[削除]</a>

@@ -4,8 +4,9 @@
 require_once('config.php');
 require_once('functions.php');
 
-//getmethodでid取得
+//getmethodでid,good取得
 $id = $_GET['id'];
+$good = $_GET['good'];
 // データベース接続
 $dbh = connectDb();
 $sql = 'SELECT * FROM tweets WHERE id = :id';
@@ -17,21 +18,29 @@ $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $tweet = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($tweet['good'] == '0') {
-        $dbh = connectDb();
-        $sql = 'UPDATE tweets SET `good` = 1 WHERE id = :id';
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        header('Location: index.php');
-        exit;
-} else {
-        $dbh = connectDb();
-        $sql = 'UPDATE tweets SET `good` = 0 WHERE id = :id';
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        header('Location: index.php');
-        exit;
-}
+$sql_good = 'UPDATE tweets SET good = :good WHERE id = :id';
+$stmt_good = $dbh->prepare($sql_good);
+$stmt_good->bindParam(':good', $good, PDO::PARAM_BOOL);
+$stmt_good->bindParam(':id', $id, PDO::PARAM_INT);
+$stmt_good->execute();
+header('Location: index.php');
+
+
+// if ($tweet['good'] == '0') {
+//         $dbh = connectDb();
+//         $sql = 'UPDATE tweets SET `good` = 1 WHERE id = :id';
+//         $stmt = $dbh->prepare($sql);
+//         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+//         $stmt->execute();
+//         header('Location: index.php');
+//         exit;
+// } else {
+//         $dbh = connectDb();
+//         $sql = 'UPDATE tweets SET `good` = 0 WHERE id = :id';
+//         $stmt = $dbh->prepare($sql);
+//         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+//         $stmt->execute();
+//         header('Location: index.php');
+//         exit;
+// }
 
