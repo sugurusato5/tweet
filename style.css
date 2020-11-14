@@ -1,0 +1,22 @@
+.good-link {
+    text-decoration: none;
+    color: red;
+}
+
+.bad-link {
+    text-decoration: none;
+    color: red;
+}
+
+.error-list{
+    list-style: none;
+    color: red;
+}
+
+.list-none {
+    list-style: none;
+}
+
+.list-none {
+    text-decoration: none;
+}
